@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Product from './components/Product';
 import Box from '@material-ui/core/Box';
-import axios from 'axios';
+import { get } from 'axios';
 import { API_ROOT } from './api/contants';
 import Container from '@material-ui/core/Container';
 
@@ -12,7 +12,7 @@ function App() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const myData = await axios.get(`${API_ROOT}&limit=5`);
+        const myData = await get(`${API_ROOT}&limit=20`);
         const { data } = myData?.data;
         setData(data);
       } catch (error) {
@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <Box py={2}>
+    <Box py={10} px={2}>
       <Container maxWidth="xl">
         <Grid container spacing={3}>
           {!data
