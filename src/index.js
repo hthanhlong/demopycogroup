@@ -5,10 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <CssBaseline />
     <App />
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById('root'),
 );
 

@@ -14,13 +14,13 @@ import { SmallAvatar } from '../stylesComponents';
 import { Button, Dialog } from '@material-ui/core';
 
 const Product = ({ data }) => {
-  const image_url = data?.images;
-  const url = image_url['480w_still']?.url;
-  const avatar_url = data?.user?.avatar_url;
-  const display_name = data?.user?.display_name;
-
   const [open, setOpen] = React.useState(false);
   const [imgCheck, setImgCheck] = React.useState(null);
+
+  const avatar_url = data?.user?.avatar_url;
+  const display_name = data?.user?.display_name;
+  const image_url = data?.images;
+  const url = image_url['480w_still']?.url;
 
   const handleClickOpen = (url) => {
     setOpen(true);
@@ -90,14 +90,16 @@ const Product = ({ data }) => {
           </Typography>
         </Link>
       </Box>
+      {/* --- Dialog ----- */}
       <Dialog fullScreen open={open} onClose={handleClose}>
         {imgCheck && (
           <Box p={5} onClick={handleClose}>
+            <Box mb={2}>
+              <Button variant="contained" color="secondary">
+                X
+              </Button>
+            </Box>
             <CardMedia component="img" src={imgCheck} alt="text" />
-            <br />
-            <Button variant="contained" color="secondary">
-              X
-            </Button>
           </Box>
         )}
       </Dialog>
