@@ -1,46 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
-import {
-  Avatar,
-  Card,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Typography,
-  withStyles,
-  Link,
-} from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import demo1 from '../imgs/test.jpg';
-
-const SmallAvatar = withStyles((theme) => ({
-  root: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
-}))(Avatar);
+import { SmallAvatar } from '../stylesComponents';
 
 const Product = ({ data }) => {
-  console.log('items', data);
+  const embed_url = data?.embed_url;
+  const avatar_url = data?.user?.avatar_url;
+  const display_name = data?.user?.display_name;
+
+  console.log('data', data);
 
   return (
     <Box>
       <Card>
         <Box px={1} pt={1}>
-          <CardMedia component="iframe" src={data.embed_url} alt="text" />
+          <CardMedia component="iframe" src={embed_url} title="demo" />
           <Box
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            py={1}
           >
             <Box>
               <IconButton>
-                <AttachFileIcon fontSize="small" />
+                {display_name && <AttachFileIcon fontSize="small" />}
               </IconButton>
             </Box>
             <Box
@@ -71,13 +63,15 @@ const Product = ({ data }) => {
         </Box>
       </Card>
       <CardContent>
-        <Link href="#">
-          <Box display="flex" alignItems="center">
-            <SmallAvatar alt="Remy Sharp" src={demo1} />
-            &nbsp;&nbsp;
-            <Typography variant="subtitle2">hksdjfkjshdf</Typography>
-          </Box>
-        </Link>
+        <Box display="flex" alignItems="center">
+          <SmallAvatar alt="Remy Sharp" src={avatar_url || ''} />
+          &nbsp;&nbsp;
+          <Link href="#">
+            <Typography variant="subtitle2">
+              {display_name || 'Username'}
+            </Typography>
+          </Link>
+        </Box>
       </CardContent>
     </Box>
   );
