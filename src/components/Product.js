@@ -11,22 +11,35 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import { SmallAvatar } from '../stylesComponents';
-import CardContent from '@material-ui/core/CardContent';
+import { Button, Dialog } from '@material-ui/core';
 
 const Product = ({ data }) => {
-  const embed_url = data?.embed_url;
+  const image_url = data?.images;
+  const url = image_url['480w_still']?.url;
   const avatar_url = data?.user?.avatar_url;
   const display_name = data?.user?.display_name;
 
-  //   console.log('data', data);
+  const [open, setOpen] = React.useState(false);
+  const [imgCheck, setImgCheck] = React.useState(null);
+
+  const handleClickOpen = (url) => {
+    setOpen(true);
+    setImgCheck(url);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
       <Card>
         <Box p={1}>
-          <CardMedia component="iframe" src={embed_url} title="demo" />
+          <Button onClick={() => handleClickOpen(url)}>
+            <CardMedia component="img" src={url} alt="text" height="270px" />
+          </Button>
         </Box>
-        <CardContent>
+        <Box px={2} pb={1}>
           <Box
             display="flex"
             justifyContent="space-between"
@@ -66,7 +79,7 @@ const Product = ({ data }) => {
               </Box>
             </Box>
           </Box>
-        </CardContent>
+        </Box>
       </Card>
       <Box display="flex" alignItems="center" py={2} px={1}>
         <SmallAvatar alt="Remy Sharp" src={avatar_url || ''} />
@@ -77,6 +90,17 @@ const Product = ({ data }) => {
           </Typography>
         </Link>
       </Box>
+      <Dialog fullScreen open={open} onClose={handleClose}>
+        {imgCheck && (
+          <Box p={5} onClick={handleClose}>
+            <CardMedia component="img" src={imgCheck} alt="text" />
+            <br />
+            <Button variant="contained" color="secondary">
+              X
+            </Button>
+          </Box>
+        )}
+      </Dialog>
     </React.Fragment>
   );
 };
