@@ -12,7 +12,7 @@ function App() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const myData = await get(`${API_ROOT}&limit=5`);
+        const myData = await get(`${API_ROOT}&limit=20`);
         const { data } = myData?.data;
         setData(data);
       } catch (error) {
@@ -40,14 +40,3 @@ function App() {
 }
 
 export default App;
-
-/* <Box
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <PaginationOutlined />
-        </Box> */
