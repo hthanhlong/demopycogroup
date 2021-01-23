@@ -2,25 +2,29 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Product from './components/Product';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import { get } from 'axios';
 import { API_ROOT } from './api/contants';
 import Container from '@material-ui/core/Container';
 
 function App() {
   const [data, setData] = React.useState([]);
+  const [count, setCount] = React.useState(1);
+
+  // const [listData, setListData] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const myData = await get(`${API_ROOT}&limit=20`);
-        const { data } = myData?.data;
+        const fetchData = await get(`${API_ROOT}&limit=${count * 20}`);
+        const { data } = fetchData?.data;
         setData(data);
       } catch (error) {
         console.log('error', error);
       }
     };
     fetchData();
-  }, []);
+  }, [count]);
 
   return (
     <Box py={10} px={2}>
@@ -34,6 +38,24 @@ function App() {
                 </Grid>
               ))}
         </Grid>
+        <Box py={3}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setCount(count + 1)}
+            disabled={data.length === 50 ? true : false}
+          >
+            + Load more
+          </Button>
+          &nbsp;&nbsp;
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setCount(1)}
+          >
+            Refresh
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
