@@ -12,6 +12,7 @@ import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import { SmallAvatar } from '../stylesComponents';
 import { Button, Dialog } from '@material-ui/core';
+import useWidth from '../utils/useWidth';
 
 const Product = ({ data }) => {
   const [open, setOpen] = React.useState(false);
@@ -31,12 +32,25 @@ const Product = ({ data }) => {
     setOpen(false);
   };
 
+  const widthChecked = useWidth() || 'lg';
+
   return (
     <React.Fragment>
       <Card>
         <Box p={1}>
           <Button onClick={() => handleClickOpen(url)}>
-            <CardMedia component="img" src={url} alt="text" height="270px" />
+            <CardMedia
+              component="img"
+              src={url}
+              alt="text"
+              height={
+                widthChecked === 'xs'
+                  ? ' 120px'
+                  : widthChecked === 'sm'
+                  ? '200px'
+                  : '270px'
+              }
+            />
           </Button>
         </Box>
         <Box px={2} pb={1}>

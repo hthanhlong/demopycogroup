@@ -12,7 +12,7 @@ function App() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const myData = await get(`${API_ROOT}&limit=20`);
+        const myData = await get(`${API_ROOT}&limit=5`);
         const { data } = myData?.data;
         setData(data);
       } catch (error) {
