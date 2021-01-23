@@ -11,8 +11,6 @@ function App() {
   const [data, setData] = React.useState([]);
   const [count, setCount] = React.useState(1);
 
-  // const [listData, setListData] = React.useState([]);
-
   React.useEffect(() => {
     const fetchData = async () => {
       try {
