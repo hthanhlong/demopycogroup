@@ -6,6 +6,6 @@ export const SmallAvatar = withStyles((theme) => ({
     width: theme.spacing(3),
     height: theme.spacing(3),
   },
-}))(Avatar);
+}))((props) => <Avatar {...props} />);
 
 export default SmallAvatar;

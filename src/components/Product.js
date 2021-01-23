@@ -7,12 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import { SmallAvatar } from '../stylesComponents';
+import {
+  BoxSpaceBetween,
+  ButtonCancel,
+  SmallAvatar,
+} from '../stylesComponents';
 import { Button, Dialog } from '@material-ui/core';
 import useWidth from '../utils/useWidth';
+import { fakeData } from '../fakedata.js/fakeData';
 
 const Product = ({ data }) => {
   const [open, setOpen] = React.useState(false);
@@ -54,45 +56,27 @@ const Product = ({ data }) => {
           </Button>
         </Box>
         <Box px={2} pb={1}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            flexWrap="wrap"
-          >
+          <BoxSpaceBetween>
             {display_name ? (
               <IconButton>
                 <AttachFileIcon fontSize="small" />
               </IconButton>
             ) : (
-              <Box height="2.75rem"></Box>
+              <Box height="2.75rem" />
             )}
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              flexWrap="wrap"
-            >
-              <Box display="flex" alignItems="center">
-                <IconButton>
-                  <VisibilityIcon fontSize="small" />
-                </IconButton>
-                <Typography variant="caption">165</Typography>
-              </Box>
-              <Box display="flex" alignItems="center">
-                <IconButton>
-                  <ChatRoundedIcon fontSize="small" />
-                </IconButton>
-                <Typography variant="caption">6545</Typography>
-              </Box>
-              <Box display="flex" alignItems="center">
-                <IconButton>
-                  <FavoriteRoundedIcon fontSize="small" />
-                </IconButton>
-                <Typography variant="caption">5464</Typography>
-              </Box>
-            </Box>
-          </Box>
+            <BoxSpaceBetween>
+              {!fakeData
+                ? 'Data is loading'
+                : fakeData.map((item, index) => (
+                    <Box display="flex" alignItems="center" key={index}>
+                      <IconButton>{item.icon}</IconButton>
+                      <Typography variant="caption">
+                        {item.AnalysisData}
+                      </Typography>
+                    </Box>
+                  ))}
+            </BoxSpaceBetween>
+          </BoxSpaceBetween>
         </Box>
       </Card>
       <Box display="flex" alignItems="center" py={2} px={1}>
@@ -107,11 +91,9 @@ const Product = ({ data }) => {
       {/* --- Dialog ----- */}
       <Dialog fullScreen open={open} onClose={handleClose}>
         {imgCheck && (
-          <Box p={5} onClick={handleClose}>
+          <Box p={5}>
             <Box mb={2}>
-              <Button variant="contained" color="secondary">
-                X
-              </Button>
+              <ButtonCancel onClick={handleClose}>X</ButtonCancel>
             </Box>
             <CardMedia component="img" src={imgCheck} alt="text" />
           </Box>
