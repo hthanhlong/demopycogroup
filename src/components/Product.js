@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -17,8 +17,8 @@ import useWidth from '../utils/useWidth';
 import { fakeData } from '../fakedata.js/fakeData';
 
 const Product = ({ data }) => {
-  const [open, setOpen] = React.useState(false);
-  const [imgCheck, setImgCheck] = React.useState(null);
+  const [open, setOpen] = useState(false);
+  const [imgCheck, setImgCheck] = useState(null);
 
   const avatar_url = data?.user?.avatar_url;
   const display_name = data?.user?.display_name;

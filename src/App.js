@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Product from './components/Product';
 import Box from '@material-ui/core/Box';
@@ -8,22 +8,24 @@ import { API_ROOT } from './api/contants';
 import Container from '@material-ui/core/Container';
 
 function App() {
-  const [data, setData] = React.useState([]);
-  const [count, setCount] = React.useState(1);
+  const [data, setData] = useState([]);
+  const [count, setCount] = useState(1);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchData = await get(`${API_ROOT}&limit=${count * 20}`);
-        const { data } = fetchData?.data;
-        setData(data);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-    fetchData();
+  // Handle fetch data from API
+
+  const fetchData = async (pageNumber) => {
+    try {
+      const fetchData = await get(`${API_ROOT}&limit=${pageNumber * 20}`);
+      const { data } = fetchData?.data;
+      setData(data);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(count);
   }, [count]);
-
   return (
     <Box py={10} px={2}>
       <Container maxWidth="xl">
