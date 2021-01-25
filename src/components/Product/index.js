@@ -11,10 +11,10 @@ import {
   BoxSpaceBetween,
   ButtonCancel,
   SmallAvatar,
-} from '../stylesComponents';
+} from '../../stylesComponents';
 import { Button, Dialog } from '@material-ui/core';
-import useWidth from '../utils/useWidth';
-import { fakeData } from '../fakedata.js/fakeData';
+import useWidth from '../../utils/useWidth';
+import { fakeData } from '../../fakedata/fakeData';
 
 const Product = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ const Product = ({ data }) => {
     <React.Fragment>
       <Card>
         <Box p={1}>
-          <Button onClick={() => handleClickOpen(url)}>
+          <Button disableRipple onClick={() => handleClickOpen(url)}>
             <CardMedia
               component="img"
               src={url}
@@ -88,7 +88,7 @@ const Product = ({ data }) => {
           </Typography>
         </Link>
       </Box>
-      {/* --- Dialog ----- */}
+      {/* ---------- Dialog ---------- */}
       <Dialog fullScreen open={open} onClose={handleClose}>
         {imgCheck && (
           <Box p={5}>

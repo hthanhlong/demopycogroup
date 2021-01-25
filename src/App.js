@@ -6,13 +6,17 @@ import Button from '@material-ui/core/Button';
 import { get } from 'axios';
 import { API_ROOT } from './api/contants';
 import Container from '@material-ui/core/Container';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function App() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
 
   // Handle fetch data from API
-
   const fetchData = async (pageNumber) => {
     try {
       const fetchData = await get(`${API_ROOT}&limit=${pageNumber * 20}`);
@@ -23,9 +27,28 @@ function App() {
     }
   };
 
+  // Handle load more
+  const handleClick = () => {
+    setCount(count + 1);
+    setIsLoading(true);
+  };
+
+  // Handle refresh
+  const handleRefresh = () => {
+    setCount(1);
+    if (count > 1) {
+      setIsLoading2(true);
+    }
+  };
+
   useEffect(() => {
     fetchData(count);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsLoading2(false);
+    }, 1500);
   }, [count]);
+
   return (
     <Box py={10} px={2}>
       <Container maxWidth="xl">
@@ -38,22 +61,32 @@ function App() {
                 </Grid>
               ))}
         </Grid>
-        <Box py={3}>
+        <Box py={3} position="fixed" bottom="10px" right="40px">
           <Button
+            disableRipple
             variant="contained"
             color="primary"
-            onClick={() => setCount(count + 1)}
+            onClick={handleClick}
             disabled={data.length === 50 ? true : false}
           >
-            + Load more
+            {!isLoading ? (
+              <AddCircleOutlineIcon />
+            ) : (
+              <CircularProgress color="inherit" size="21px" />
+            )}
           </Button>
           &nbsp;&nbsp;
           <Button
+            disableRipple
             variant="contained"
             color="secondary"
-            onClick={() => setCount(1)}
+            onClick={handleRefresh}
           >
-            Refresh
+            {!isLoading2 ? (
+              <RefreshIcon />
+            ) : (
+              <CircularProgress color="inherit" size="21px" />
+            )}
           </Button>
         </Box>
       </Container>

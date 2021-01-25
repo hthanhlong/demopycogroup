@@ -10,6 +10,6 @@ export const ButtonCancel = withStyles({
       color: 'yellow',
     },
   },
-})((props) => <Button {...props} />);
+})((props) => <Button disableRipple {...props} />);
 
 export default ButtonCancel;
