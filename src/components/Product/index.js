@@ -14,20 +14,14 @@ import {
 } from '../../stylesComponents';
 import { Button, Dialog } from '@material-ui/core';
 import useWidth from '../../utils/useWidth';
-import { fakeData } from '../../fakedata/fakeData';
 
 const Product = ({ data }) => {
+  const [img, setImg] = useState('');
   const [open, setOpen] = useState(false);
-  const [imgCheck, setImgCheck] = useState(null);
-
-  const avatar_url = data?.user?.avatar_url;
-  const display_name = data?.user?.display_name;
-  const image_url = data?.images;
-  const url = image_url['480w_still']?.url;
 
   const handleClickOpen = (url) => {
     setOpen(true);
-    setImgCheck(url);
+    setImg(url);
   };
 
   const handleClose = () => {
@@ -40,11 +34,11 @@ const Product = ({ data }) => {
     <React.Fragment>
       <Card>
         <Box p={1}>
-          <Button disableRipple onClick={() => handleClickOpen(url)}>
+          <Button onClick={() => handleClickOpen(data.images.downsized.url)}>
             <CardMedia
               component="img"
-              src={url}
               alt="text"
+              src={data.images.downsized.url}
               height={
                 widthChecked === 'xs'
                   ? ' 120px'
@@ -57,47 +51,32 @@ const Product = ({ data }) => {
         </Box>
         <Box px={2} pb={1}>
           <BoxSpaceBetween>
-            {display_name ? (
-              <IconButton>
-                <AttachFileIcon fontSize="small" />
-              </IconButton>
-            ) : (
-              <Box height="2.75rem" />
-            )}
-            <BoxSpaceBetween>
-              {!fakeData
-                ? 'Data is loading'
-                : fakeData.map((item, index) => (
-                    <Box display="flex" alignItems="center" key={index}>
-                      <IconButton>{item.icon}</IconButton>
-                      <Typography variant="caption">
-                        {item.AnalysisData}
-                      </Typography>
-                    </Box>
-                  ))}
-            </BoxSpaceBetween>
+            <IconButton>
+              <AttachFileIcon fontSize="small" />
+            </IconButton>
           </BoxSpaceBetween>
         </Box>
       </Card>
       <Box display="flex" alignItems="center" py={2} px={1}>
-        <SmallAvatar alt="Remy Sharp" src={avatar_url || ''} />
+        <SmallAvatar />
         &nbsp;&nbsp;
         <Link href="#">
-          <Typography variant="subtitle2">
-            {display_name || 'Username'}
-          </Typography>
+          <Typography variant="subtitle2">link name</Typography>
         </Link>
       </Box>
       {/* ---------- Dialog ---------- */}
       <Dialog fullScreen open={open} onClose={handleClose}>
-        {imgCheck && (
-          <Box p={5}>
-            <Box mb={2}>
-              <ButtonCancel onClick={handleClose}>X</ButtonCancel>
-            </Box>
-            <CardMedia component="img" src={imgCheck} alt="text" />
+        <Box p={5}>
+          <Box mb={2}>
+            <ButtonCancel onClick={handleClose}>X</ButtonCancel>
           </Box>
-        )}
+          <CardMedia
+            component="img"
+            src={img}
+            alt="text"
+            onClick={handleClose}
+          />
+        </Box>
       </Dialog>
     </React.Fragment>
   );
